@@ -13,6 +13,7 @@ import pandas as pd
 from collections import namedtuple
 from dataclasses import dataclass, field
 from sentence_transformers import SentenceTransformer
+from sklearn.linear_model import LogisticRegression
 
 DIR_PATH = Path(__file__).parent / "output"
 if not DIR_PATH.exists():
@@ -150,6 +151,45 @@ class Ember:
             return joblib.load(file_name)
         else:
             raise FileNotFoundError(f"No ember named {name}. File name: {file_name}")
+
+
+class LogisticHead(Ember):
+    """Ember that scores inputs with a logistic regression fitted on the target and contrast embeddings."""
+
+    def __init__(self, name: str, pos: list[str], neg: list[str], C: float = 1.0):
+        """
+        Encode the target and contrast phrases and fit the logistic regression on them.
+
+        Args:
+            name (str): Name the instance is saved under.
+            pos (list[str]): Target phrases, labelled 1.
+            neg (list[str]): Contrast phrases, labelled 0.
+            C (float): Inverse regularisation strength passed to LogisticRegression.
+        """
+        super().__init__(name, pos, neg)
+        x = np.vstack([self.pos.x, self.neg.x])
+        y = np.concatenate([np.ones(len(pos)), np.zeros(len(neg))])
+        self.head = LogisticRegression(C=C, max_iter=1000).fit(x, y)
+
+    def predict_proba(self, inputs: str, add_observe: bool = False) -> np.ndarray:
+        """
+        Predict the probabilities of the input being target or contrast.
+
+        Args:
+            inputs (str): The input text to be analyzed.
+            add_observe (bool): Record the input in self.observation, as Ember does.
+
+        Returns:
+            np.ndarray: [target, contrast] probabilities, in the same order as Ember.predict_proba.
+        """
+        text_input = self.model.encode([inputs])
+        target = self.head.predict_proba(text_input)[0, 1]
+
+        if add_observe is True:
+            state = State(text=inputs, x=text_input)
+            self.observation.add(state, target, 1 - target, "pos" if target > 0.5 else "neg")
+
+        return np.array([target, 1 - target])
 
 
 def add_new_ember(name, pos, neg):

@@ -6,4 +6,4 @@ from pathlib import Path
 if str(Path(__file__).parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).parent))
 
-from model import Observation, Ember, add_new_ember, remove_ember
+from model import Observation, Ember, LogisticHead, add_new_ember, remove_ember
