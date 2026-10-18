@@ -25,7 +25,7 @@ pipe = Ember.load("StopButton")
 ```
 or with CLI
 ```shell
-    python promptless load --name StopButton --action predict --inputs hello hru
+    python promptless load --name StopButton --action predict --inputs "hello hru"
 ```
 **Viewing target corpus stored as `pos` attribute**
 
