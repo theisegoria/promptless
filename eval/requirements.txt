@@ -1,0 +1,6 @@
+sentence_transformers>=3.0
+numpy
+pandas
+joblib
+scikit-learn
+matplotlib
