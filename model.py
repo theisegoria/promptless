@@ -145,7 +145,7 @@ class Ember:
     @staticmethod
     def load(name):
         """Loads any instance."""
-        file_name = DIR_PATH / f"{name.lower().capitalize()}.joblib"
+        file_name = DIR_PATH / f"{name.lower()}.joblib"
         if file_name.exists():
             return joblib.load(file_name)
         else:
