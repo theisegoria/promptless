@@ -4,6 +4,8 @@ Python CLI plugin/app designed to replace streaming prompt chains that assist co
 ### Requirements
 - `sentence_transformers`
 - `numpy`
+- `pandas`
+- `joblib`
 
 ### Alternative Approach
 - Build around huggingface `transformers` chatting pipeline but I am tired of reading docs.
