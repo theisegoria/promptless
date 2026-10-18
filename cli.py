@@ -53,8 +53,8 @@ def main():
             name=args.name,
         )
         if args.action == 'predict':
-            pipe.predict(args.inputs)
+            print(pipe.predict(args.inputs))
         else:
-            pipe.predict_proba(args.inputs)
+            print(pipe.predict_proba(args.inputs))
     else:
         args.func()
