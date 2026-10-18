@@ -149,7 +149,7 @@ class Ember:
         if file_name.exists():
             return joblib.load(file_name)
         else:
-            raise FileExistsError
+            raise FileNotFoundError(f"No ember named {name}. File name: {file_name}")
 
 
 def add_new_ember(name, pos, neg):
@@ -172,7 +172,7 @@ def remove_ember(name):
     """Removes ember stored in collection."""
     file_name = DIR_PATH / f"{name.lower()}.joblib"
     if not file_name.exists():
-        raise FileExistsError
+        raise FileNotFoundError(f"No ember named {name}. File name: {file_name}")
     else:
         os.remove(file_name)
         print(f"Deleted ember {name}")
