@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Folder containing this script, so it can be run from any directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Define farewell and greeting lists
 farewells=(
     "Goodbye! Take care!"
@@ -50,9 +53,9 @@ greetings=(
 )
 
 echo "Creating StopButton . . ."
-add_command=("python" "promptless/__main__.py" "add" "--name" "StopButton" "--target" "${farewells[@]}" "--contrast" "${greetings[@]}")
+add_command=("python" "$SCRIPT_DIR/__main__.py" "add" "--name" "StopButton" "--target" "${farewells[@]}" "--contrast" "${greetings[@]}")
 "${add_command[@]}"
 
 echo "Finished setting up StopButton. Currently stored states:"
-view_command=("python" "promptless/__main__.py" "view")
+view_command=("python" "$SCRIPT_DIR/__main__.py" "view")
 "${view_command[@]}"

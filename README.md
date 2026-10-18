@@ -15,7 +15,7 @@ Python CLI plugin/app designed to replace streaming prompt chains that assist co
 ### Demo usage
 - To set up StopButton Agent
 ```shell
-    python ./setup.sh
+    bash ./setup.sh
 ```
 
 - Loading Pipeline Example: StopButton
