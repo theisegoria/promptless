@@ -153,7 +153,7 @@ class Ember:
 
 
 def add_new_ember(name, pos, neg):
-    """Adds new ember to collection. Returns None if already exists. """
+    """Adds new ember to collection. Returns the error instead of raising it if setup fails, e.g. when it already exists. """
 
     try:
         file_name = DIR_PATH / f"{name.lower()}.joblib"
